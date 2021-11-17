@@ -1,8 +1,21 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+import Lobby from './pages/Lobby';
+import RoomList from './pages/RoomList';
+import RoomDetail from './pages/RoomDetail';
+import Friends from './pages/Friends';
+import Setting from './pages/Setting';
 
 function App() {
   return (
-    <div>Kakaonibs</div>
+    <Routes>
+      <Route index element={<Lobby />} />
+      <Route path="/rooms" element={<RoomList />} />
+      <Route path="/rooms/:roomId" element={<RoomDetail />} />
+      <Route path="/friends" element={<Friends />} />
+      <Route path="/settings" element={<Setting />} />
+    </Routes>
   );
 }
 

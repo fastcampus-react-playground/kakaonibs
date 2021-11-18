@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from '@emotion/styled/macro';
-import { useTheme } from '@emotion/react';
+import React from "react";
+import styled from "@emotion/styled/macro";
+import { useTheme } from "@emotion/react";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { BiUser } from 'react-icons/bi';
-import { BsChatDots } from 'react-icons/bs';
-import { FiSettings } from 'react-icons/fi';
+import { BiUser } from "react-icons/bi";
+import { BsChatDots } from "react-icons/bs";
+import { AiOutlineEllipsis } from "react-icons/ai";
 
 const Base = styled.nav<{ backgroundColor: string; borderColor: string }>`
   position: fixed;
@@ -49,7 +49,10 @@ const BottomNavigation: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Base backgroundColor={theme.colors.gray[50]} borderColor={theme.colors.gray[300]}>
+    <Base
+      backgroundColor={theme.colors.gray[50]}
+      borderColor={theme.colors.gray[300]}
+    >
       <NavList>
         <NavItem>
           <Link to="/friends">
@@ -66,15 +69,15 @@ const BottomNavigation: React.FC = () => {
           </Link>
         </NavItem>
         <NavItem>
-          <Link to="/settings">
+          <Link to="/more">
             <NavButton>
-              <FiSettings />
+              <AiOutlineEllipsis />
             </NavButton>
           </Link>
         </NavItem>
       </NavList>
     </Base>
-  )
-}
+  );
+};
 
 export default BottomNavigation;

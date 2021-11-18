@@ -1,9 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const RoomDetailPage: React.FC = () => {
-  return (
-    <>RoomDetailPage</>
-  )
-}
+  return <>RoomDetailPage</>;
+};
 
 export default RoomDetailPage;

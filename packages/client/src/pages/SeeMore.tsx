@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-import RoomList from "../components/RoomList";
-import BottomNavigation from "../components/BottomNavigation";
 import TopNavigation from "../components/TopNavigation";
+import BottomNavigation from "../components/BottomNavigation";
 
 const Base = styled.div`
   width: 100%;
@@ -17,16 +16,15 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const RoomListPage: React.FC = () => {
+const SeeMorePage: React.FC = () => {
   return (
     <Base>
       <Container>
-        <TopNavigation title="채팅" />
-        <RoomList />
+        <TopNavigation title="더보기" />
         <BottomNavigation />
       </Container>
     </Base>
   );
 };
 
-export default RoomListPage;
+export default SeeMorePage;

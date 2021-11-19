@@ -1,9 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import styled from "@emotion/styled/macro";
 import { BiSearchAlt2, BiArrowBack } from "react-icons/bi";
-import { RiChatNewLine } from "react-icons/ri";
-import { HiOutlineMusicNote } from "react-icons/hi";
-import { AiOutlineSetting } from "react-icons/ai";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Base = styled.header`
   display: flex;
@@ -11,11 +11,10 @@ const Base = styled.header`
   align-items: center;
   position: fixed;
   top: 0;
-  left: 12px;
-  right: 12px;
+  left: 0;
+  right: 0;
   height: 36px;
   box-sizing: border-box;
-  background-color: #fff;
 `;
 
 const Title = styled.h1`
@@ -28,7 +27,7 @@ const ActionItemContainer = styled.div``;
 
 const ActionItem = styled.span`
   font-size: 20px;
-  padding: 0 12px;
+  padding: 0 8px;
 `;
 
 interface Props {
@@ -36,21 +35,20 @@ interface Props {
 }
 
 const TopNavigation: React.FC<Props> = ({ title }) => {
+  const navigate = useNavigate();
+
   return (
     <Base>
+      <ActionItem onClick={() => navigate("/rooms", { replace: true })}>
+        <BiArrowBack />
+      </ActionItem>
       <Title>{title}</Title>
       <ActionItemContainer>
         <ActionItem>
           <BiSearchAlt2 />
         </ActionItem>
         <ActionItem>
-          <RiChatNewLine />
-        </ActionItem>
-        <ActionItem>
-          <HiOutlineMusicNote />
-        </ActionItem>
-        <ActionItem>
-          <AiOutlineSetting />
+          <GiHamburgerMenu />
         </ActionItem>
       </ActionItemContainer>
     </Base>

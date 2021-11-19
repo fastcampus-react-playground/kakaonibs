@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 
 import TopNavigation from "../components/TopNavigation";
 import BottomNavigation from "../components/BottomNavigation";
+import UserInfo from "../components/SeeMore/UserInfo";
+import IconButtonList from "../components/SeeMore/IconButtonList";
 
 const Base = styled.div`
   width: 100%;
@@ -21,6 +23,8 @@ const SeeMorePage: React.FC = () => {
     <Base>
       <Container>
         <TopNavigation title="더보기" />
+        <UserInfo username="가나다라" telNo="+8210 9999 9999" />
+        <IconButtonList />
         <BottomNavigation />
       </Container>
     </Base>

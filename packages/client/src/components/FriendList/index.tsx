@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled/macro";
-import Friend from "./Friend";
+// import Friend from "./Friend";
 
 const Base = styled.ul`
   list-style: none;
@@ -9,26 +9,7 @@ const Base = styled.ul`
 `;
 
 const FriendList: React.FC = () => {
-  return (
-    <Base>
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-    </Base>
-  );
+  return <Base>{/*<Friend />*/}</Base>;
 };
 
 export default FriendList;

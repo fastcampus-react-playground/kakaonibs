@@ -19,7 +19,7 @@ const Container = styled.div`
 
 const Summary = styled.small`
   margin: 4px 0;
-  padding: 0;
+  padding: 36px 0 0 0;
   font-size: 12px;
 `;
 

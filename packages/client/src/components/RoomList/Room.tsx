@@ -36,7 +36,7 @@ const Content = styled.div`
   margin-left: 5px;
 `;
 
-const Nickname = styled.p`
+const Username = styled.p`
   margin: 0;
   padding: 0;
   font-size: 16px;
@@ -61,23 +61,30 @@ const SentAtWrapper = styled.div`
 
 const SentAt = styled.time``;
 
-const Room = () => {
+interface Props {
+  id: number;
+  username: string;
+  lastMessage: string;
+  sentAt: string;
+}
+
+const Room: React.FC<Props> = ({ id, username, lastMessage, sentAt }) => {
   const theme = useTheme();
 
   return (
-    <StyledLink to={`/rooms`} color={theme.colors.gray[900]}>
+    <StyledLink to={`/rooms/${id}`} color={theme.colors.gray[900]}>
       <Base color={theme.colors.gray[100]}>
         <AvatarWrapper>
           <Avatar src="/placeholder.jpeg" />
         </AvatarWrapper>
         <Content>
-          <Nickname>섹시스트😍</Nickname>
+          <Username>{username}</Username>
           <LastMessage color={theme.colors.gray[800]}>
-            sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdf
+            {lastMessage}
           </LastMessage>
         </Content>
         <SentAtWrapper>
-          <SentAt>어제</SentAt>
+          <SentAt>{sentAt}</SentAt>
         </SentAtWrapper>
       </Base>
     </StyledLink>

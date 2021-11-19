@@ -23,29 +23,32 @@ const Avatar = styled.img`
   object-fit: contain;
 `;
 
-const NicknameWrapper = styled.div`
+const UsernameWrapper = styled.div`
   margin-left: 8px;
 `;
 
-const Nickname = styled.p`
+const Username = styled.p`
   margin: 0;
   padding: 0;
   font-size: 16px;
 `;
 
-interface Props {}
+interface Props {
+  username: string;
+  thumbnailImage: string;
+}
 
-const Friend: React.FC<Props> = () => {
+const Friend: React.FC<Props> = ({ username, thumbnailImage }) => {
   const theme = useTheme();
 
   return (
     <Base color={theme.colors.gray[100]}>
       <AvatarWrapper>
-        <Avatar src="/placeholder.jpeg" />
+        <Avatar src={thumbnailImage} />
       </AvatarWrapper>
-      <NicknameWrapper>
-        <Nickname>섹시스트😍</Nickname>
-      </NicknameWrapper>
+      <UsernameWrapper>
+        <Username>{username}</Username>
+      </UsernameWrapper>
     </Base>
   );
 };

@@ -19,7 +19,7 @@ const LogoWrapper = styled.div`
   width: 128px;
   height: 128px;
   object-fit: contain;
-  margin: 96px auto;
+  margin: 128px auto;
 `;
 
 const Logo = styled.img`
@@ -34,40 +34,52 @@ const InputWrapper = styled.div`
   box-sizing: border-box;
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ borderColor: string }>`
   margin: 0;
   width: 100%;
-  height: 32px;
+  height: 48px;
   border: none;
+  border-bottom: 1px solid ${({ borderColor }) => borderColor};
   padding: 0 12px;
   box-sizing: border-box;
   font-size: 16px;
-  border-radius: 4px;
 `;
 
-const ButtonWrapper = styled.div``;
+const ButtonWrapper = styled.div`
+  margin-top: 36px;
+`;
 
-const Button = styled.button`
+const Button = styled.button<{ backgroundColor: string }>`
   margin: 0;
   padding: 0;
   border: none;
-  background: transparent;
+  background: ${({ backgroundColor }) => backgroundColor};
+  width: 100%;
+  height: 48px;
+  font-size: 16px;
+  font-weight: bold;
+  &:active {
+    opacity: 0.7;
+  }
 `;
 
 const LobbyPage: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Base backgroundColor={theme.colors.primary}>
+    <Base backgroundColor={theme.colors.white}>
       <Container>
         <LogoWrapper>
           <Logo src="/logo.png" />
         </LogoWrapper>
         <InputWrapper>
-          <Input />
+          <Input
+            borderColor={theme.colors.gray[900]}
+            placeholder="이름을 입력하세요."
+          />
         </InputWrapper>
         <ButtonWrapper>
-          <Button>로그인</Button>
+          <Button backgroundColor={theme.colors.primary}>로그인</Button>
         </ButtonWrapper>
       </Container>
     </Base>

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
+import { useMutation } from "react-query";
+import { login } from "../apis/user";
 
 const Base = styled.div<{ backgroundColor: string }>`
   width: 100%;
@@ -66,6 +68,18 @@ const Button = styled.button<{ backgroundColor: string }>`
 const LobbyPage: React.FC = () => {
   const theme = useTheme();
 
+  const [username, setUsername] = useState<string>("");
+
+  const mutation = useMutation((username: string) => login({ username }));
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  const handleLogin = () => {
+    mutation.mutate(username);
+  };
+
   return (
     <Base backgroundColor={theme.colors.white}>
       <Container>
@@ -76,10 +90,13 @@ const LobbyPage: React.FC = () => {
           <Input
             borderColor={theme.colors.gray[900]}
             placeholder="이름을 입력하세요."
+            onChange={handleChange}
           />
         </InputWrapper>
         <ButtonWrapper>
-          <Button backgroundColor={theme.colors.primary}>로그인</Button>
+          <Button backgroundColor={theme.colors.primary} onClick={handleLogin}>
+            로그인
+          </Button>
         </ButtonWrapper>
       </Container>
     </Base>

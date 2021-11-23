@@ -11,9 +11,9 @@ function App() {
   return (
     <Routes>
       <Route index element={<Lobby />} />
+      <Route path="/friends" element={<Friends />} />
       <Route path="/rooms" element={<RoomList />} />
       <Route path="/rooms/:roomId" element={<RoomDetail />} />
-      <Route path="/friends" element={<Friends />} />
       <Route path="/more" element={<Setting />} />
     </Routes>
   );

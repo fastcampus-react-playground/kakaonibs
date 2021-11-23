@@ -64,11 +64,16 @@ const SentAt = styled.time``;
 interface Props {
   id: number;
   username: string;
-  lastMessage: string;
-  sentAt: string;
+  lastMessage?: string;
+  latestMessageSentAt?: string;
 }
 
-const Room: React.FC<Props> = ({ id, username, lastMessage, sentAt }) => {
+const ChatRoom: React.FC<Props> = ({
+  id,
+  username,
+  lastMessage,
+  latestMessageSentAt,
+}) => {
   const theme = useTheme();
 
   return (
@@ -84,11 +89,11 @@ const Room: React.FC<Props> = ({ id, username, lastMessage, sentAt }) => {
           </LastMessage>
         </Content>
         <SentAtWrapper>
-          <SentAt>{sentAt}</SentAt>
+          <SentAt>{latestMessageSentAt}</SentAt>
         </SentAtWrapper>
       </Base>
     </StyledLink>
   );
 };
 
-export default Room;
+export default ChatRoom;

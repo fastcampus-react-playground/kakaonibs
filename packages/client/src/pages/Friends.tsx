@@ -1,9 +1,21 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 
+import Friend from "../components/FriendList/Friend";
 import BottomNavigation from "../components/BottomNavigation";
 import TopNavigation from "../components/TopNavigation";
 import FriendList from "../components/FriendList";
+import { useMutation, useQuery } from "react-query";
+import { fetchUserList } from "../apis/user";
+import { AxiosError, AxiosResponse } from "axios";
+import { Room, User } from "../types";
+import Profile from "../components/Profile";
+import {
+  fetchChatRoomList,
+  makeChatRoom,
+  MakeChatRoomRequest,
+} from "../apis/room";
 
 const Base = styled.div`
   width: 100%;
@@ -19,17 +31,65 @@ const Container = styled.div`
 
 const Summary = styled.small`
   margin: 4px 0;
-  padding: 36px 0 0 0;
+  padding: 24px 0 0 0;
   font-size: 12px;
 `;
 
 const FriendsPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const { data: userData } = useQuery<
+    AxiosResponse<{ count: number; rows: Array<User> }>,
+    AxiosError
+  >("fetchUserList", fetchUserList);
+
+  const { data: chatRoomListData } = useQuery<
+    AxiosResponse<Array<Room>>,
+    AxiosError
+  >("fetchChatRoomList", fetchChatRoomList);
+
+  const mutation = useMutation("makeChatRoom", (request: MakeChatRoomRequest) =>
+    makeChatRoom(request)
+  );
+
+  const handleChatRoomCreate = (opponentId: string) => {
+    const chatRoom = chatRoomListData?.data.find(
+      (chatRoom) => chatRoom.opponentId === opponentId
+    );
+
+    if (chatRoom) {
+      navigate(`/rooms/${chatRoom.id}`);
+    } else {
+      mutation.mutate({
+        opponentId,
+      });
+
+      if (mutation.data?.data) {
+        navigate(`/rooms/${mutation.data.data.id}`);
+      }
+    }
+  };
+
   return (
     <Base>
       <Container>
         <TopNavigation title="친구" />
-        <Summary>친구 4</Summary>
-        <FriendList />
+        <Profile username="test" />
+        {userData && (
+          <>
+            <Summary>친구 {userData.data.count}</Summary>
+            <FriendList>
+              {userData.data.rows.map((row) => (
+                <Friend
+                  key={row.id}
+                  username={row.username}
+                  thumbnailImage={row.thumbnailImageUrl}
+                  onClick={() => handleChatRoomCreate(row.id)}
+                />
+              ))}
+            </FriendList>
+          </>
+        )}
         <BottomNavigation />
       </Container>
     </Base>

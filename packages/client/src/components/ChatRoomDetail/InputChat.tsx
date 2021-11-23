@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
@@ -69,10 +69,17 @@ const SendButton = styled.button<{ backgroundColor: string }>`
   }
 `;
 
-interface Props {}
+interface Props {
+  onClick(content: string): void;
+}
 
-const InputChat: React.FC<Props> = () => {
+const InputChat: React.FC<Props> = ({ onClick }) => {
   const theme = useTheme();
+  const [content, setContent] = useState<string>("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContent(e.target.value);
+  };
 
   return (
     <Base
@@ -88,10 +95,14 @@ const InputChat: React.FC<Props> = () => {
         <Input
           borderColor={theme.colors.gray[200]}
           backgroundColor={theme.colors.gray[100]}
+          onChange={handleChange}
         />
       </InputWrapper>
       <SendButtonWrapper>
-        <SendButton backgroundColor={theme.colors.primary}>
+        <SendButton
+          backgroundColor={theme.colors.primary}
+          onClick={() => onClick(content)}
+        >
           <AiOutlineArrowUp />
         </SendButton>
       </SendButtonWrapper>

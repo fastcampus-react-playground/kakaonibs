@@ -6,14 +6,14 @@ const Base = styled.li<{ color: string }>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 16px 0;
+  padding: 48px 0 24px 0;
   width: 100%;
   border-bottom: 1px solid ${({ color }) => color};
 `;
 
 const AvatarWrapper = styled.div`
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
 `;
 
 const Avatar = styled.img`
@@ -36,14 +36,13 @@ const Username = styled.p`
 interface Props {
   username: string;
   thumbnailImage?: string;
-  onClick(): void;
 }
 
-const Friend: React.FC<Props> = ({ username, thumbnailImage, onClick }) => {
+const Profile: React.FC<Props> = ({ username, thumbnailImage }) => {
   const theme = useTheme();
 
   return (
-    <Base color={theme.colors.gray[100]} onClick={onClick}>
+    <Base color={theme.colors.gray[100]}>
       <AvatarWrapper>
         <Avatar src={thumbnailImage} />
       </AvatarWrapper>
@@ -54,4 +53,4 @@ const Friend: React.FC<Props> = ({ username, thumbnailImage, onClick }) => {
   );
 };
 
-export default Friend;
+export default Profile;

@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
-// import ReceivedMessage from "./ReceivedMessage";
-// import SentMessage from "./SentMessage";
 
 export interface MessageType {
-  senderId: number;
+  senderId: string;
   content: string;
   timestamp: string;
 }
@@ -19,13 +17,8 @@ const Base = styled.ul`
   }
 `;
 
-const MessageList: React.FC = () => {
-  return (
-    <Base>
-      {/*<ReceivedMessage />*/}
-      {/*<SentMessage />*/}
-    </Base>
-  );
+const MessageList: React.FC = ({ children }) => {
+  return <Base>{children}</Base>;
 };
 
 export default MessageList;

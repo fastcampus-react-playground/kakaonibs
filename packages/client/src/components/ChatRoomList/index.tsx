@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled/macro";
-// import Room from "./Room";
+// import ChatRoom from "./ChatRoom";
 
 const Base = styled.ul`
   list-style: none;
@@ -8,8 +8,8 @@ const Base = styled.ul`
   padding: 36px 0 64px 0;
 `;
 
-const RoomList: React.FC = () => {
-  return <Base>{/*<Room />*/}</Base>;
+const ChatRoomList: React.FC = ({ children }) => {
+  return <Base>{children}</Base>;
 };
 
-export default RoomList;
+export default ChatRoomList;

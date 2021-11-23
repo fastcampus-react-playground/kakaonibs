@@ -6,7 +6,7 @@ import { MessageType } from "./MessageList";
 
 interface ReceivedMessage extends MessageType {
   receiver: string;
-  receiverThumbnailImage: string;
+  receiverThumbnailImage?: string;
 }
 
 const Base = styled.li`

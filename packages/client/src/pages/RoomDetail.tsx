@@ -1,11 +1,18 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "@emotion/styled";
-import { Global, css, useTheme } from "@emotion/react";
+import { Global, css } from "@emotion/react";
 
-import TopNavigation from "../components/RoomDetail/TopNavigation";
-import InputChat from "../components/RoomDetail/InputChat";
-import MessageList from "../components/RoomDetail/MessageList";
+import TopNavigation from "../components/ChatRoomDetail/TopNavigation";
+import InputChat from "../components/ChatRoomDetail/InputChat";
+import MessageList from "../components/ChatRoomDetail/MessageList";
+import { useMutation, useQuery } from "react-query";
+import { fetchChatRoomDetail } from "../apis/room";
+import { AxiosError, AxiosResponse } from "axios";
+import { Chat, Room } from "../types";
+import { fetchChatMessageList, sendChatMessage } from "../apis/chat";
+import SentMessage from "../components/ChatRoomDetail/SentMessage";
+import ReceivedMessage from "../components/ChatRoomDetail/ReceivedMessage";
 
 const globalStyles = css`
   body {
@@ -25,36 +32,60 @@ const Container = styled.div`
   padding: 0 24px;
 `;
 
-const Timestamp = styled.div<{ backgroundColor: string; color: string }>`
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  color: ${({ color }) => color};
-  padding: 15px;
-  font-size: 14px;
-  border-radius: 25px;
-  margin-bottom: 25px;
-  width: fit-content;
-`;
-
 const RoomDetailPage: React.FC = () => {
-  const { roomId } = useParams();
-  const theme = useTheme();
+  const { roomId } = useParams<string>();
 
-  console.log(roomId);
+  const { data: chatRoomDetailData } = useQuery<
+    AxiosResponse<Room>,
+    AxiosError
+  >(["fetchChatRoomDetail", roomId], () =>
+    fetchChatRoomDetail(roomId as string)
+  );
+
+  const { data: chatListData } = useQuery<
+    AxiosResponse<Array<Chat>>,
+    AxiosError
+  >(["fetchChatMessageList", roomId], () =>
+    fetchChatMessageList(roomId as string)
+  );
+
+  const mutation = useMutation("sendChatMessage", (content: string) =>
+    sendChatMessage(roomId as string, content)
+  );
+
+  const handleSend = (content: string) => {
+    mutation.mutate(content);
+  };
 
   return (
     <Base>
       <Global styles={globalStyles} />
-      <TopNavigation title="123" />
+      {chatRoomDetailData && (
+        <TopNavigation title={chatRoomDetailData.data.user.username} />
+      )}
       <Container>
-        <Timestamp
-          backgroundColor={theme.colors.gray[400]}
-          color={theme.colors.white}
-        >
-          Tuesday, June 30, 2020
-        </Timestamp>
-        <MessageList />
+        <MessageList>
+          {chatListData &&
+            chatListData.data.map((chat) =>
+              chat.senderId === chatRoomDetailData?.data.userId ? (
+                <SentMessage
+                  senderId={chat.senderId}
+                  content={chat.content}
+                  timestamp={chat.createdAt}
+                />
+              ) : (
+                <ReceivedMessage
+                  receiver={chat.user.username}
+                  receiverThumbnailImage={chat.user.thumbnailImageUrl}
+                  senderId={chat.senderId}
+                  content={chat.content}
+                  timestamp={chat.createdAt}
+                />
+              )
+            )}
+        </MessageList>
       </Container>
-      <InputChat />
+      <InputChat onClick={handleSend} />
     </Base>
   );
 };

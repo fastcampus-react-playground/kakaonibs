@@ -5,6 +5,10 @@ import TopNavigation from "../components/TopNavigation";
 import BottomNavigation from "../components/BottomNavigation";
 import UserInfo from "../components/SeeMore/UserInfo";
 import IconButtonList from "../components/SeeMore/IconButtonList";
+import { useQuery } from "react-query";
+import { AxiosError, AxiosResponse } from "axios";
+import { IProfile } from "../types";
+import { fetchMyProfile } from "../apis/user";
 
 const Base = styled.div`
   width: 100%;
@@ -19,11 +23,21 @@ const Container = styled.div`
 `;
 
 const SeeMorePage: React.FC = () => {
+  const { data: profileData } = useQuery<AxiosResponse<IProfile>, AxiosError>(
+    "fetchMyProfile",
+    fetchMyProfile
+  );
+
   return (
     <Base>
       <Container>
         <TopNavigation title="더보기" />
-        <UserInfo username="가나다라" telNo="+8210 9999 9999" />
+        {profileData && (
+          <UserInfo
+            username={profileData?.data.username}
+            telNo="+8210 9999 9999"
+          />
+        )}
         <IconButtonList />
         <BottomNavigation />
       </Container>

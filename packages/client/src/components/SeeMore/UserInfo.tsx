@@ -47,7 +47,7 @@ const UserInfo: React.FC<Props> = ({ username, telNo }) => {
   return (
     <Base>
       <ImageWrapper>
-        <Image src="/placeholder.jpeg" />
+        <Image src="/placeholder.png" />
       </ImageWrapper>
       <Info>
         <UserName>{username}</UserName>

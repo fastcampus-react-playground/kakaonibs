@@ -10,7 +10,7 @@ export interface MessageType {
 const Base = styled.ul`
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0 48px 0;
   width: 100%;
   > li + li {
     margin-top: 25px;

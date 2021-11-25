@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled/macro";
-// import ChatRoom from "./ChatRoom";
 
 const Base = styled.ul`
   list-style: none;

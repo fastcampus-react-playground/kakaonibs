@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled/macro";
-import { BiSearchAlt2, BiArrowBack } from "react-icons/bi";
+import { BiSearchAlt2 } from "react-icons/bi";
 import { RiChatNewLine } from "react-icons/ri";
 import { HiOutlineMusicNote } from "react-icons/hi";
 import { AiOutlineSetting } from "react-icons/ai";

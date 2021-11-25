@@ -1,4 +1,10 @@
-export interface User {
+export interface IProfile {
+  username: string;
+  userId: string;
+  isLogged: boolean;
+}
+
+export interface IUser {
   id: string;
   username: string;
   thumbnailImageUrl?: string;
@@ -6,22 +12,22 @@ export interface User {
   updatedAt: string;
 }
 
-export interface Room {
+export interface IRoom {
   id: number;
   opponentId: string;
   userId: string;
-  user: User;
+  user: IUser;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface Chat {
+export interface IChat {
   id: number;
   content: string;
   senderId: string;
   roomId: string;
-  user: User;
-  room: Room;
+  user: IUser;
+  room: IRoom;
   createdAt: string;
   updatedAt: string;
 }

@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 import { useMutation } from "react-query";
 import { login } from "../apis/user";
+import { useNavigate } from "react-router-dom";
 
 const Base = styled.div<{ backgroundColor: string }>`
   width: 100%;
@@ -67,6 +68,7 @@ const Button = styled.button<{ backgroundColor: string }>`
 
 const LobbyPage: React.FC = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState<string>("");
 
@@ -77,7 +79,13 @@ const LobbyPage: React.FC = () => {
   };
 
   const handleLogin = () => {
-    mutation.mutate(username);
+    mutation.mutate(username, {
+      onSuccess: (data) => {
+        if (data?.statusText === "OK") {
+          navigate("/friends");
+        }
+      },
+    });
   };
 
   return (

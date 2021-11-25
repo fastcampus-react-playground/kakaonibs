@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Global, css } from "@emotion/react";
+import { io } from "socket.io-client";
 
 import TopNavigation from "../components/ChatRoomDetail/TopNavigation";
 import InputChat from "../components/ChatRoomDetail/InputChat";
@@ -9,10 +10,13 @@ import MessageList from "../components/ChatRoomDetail/MessageList";
 import { useMutation, useQuery } from "react-query";
 import { fetchChatRoomDetail } from "../apis/room";
 import { AxiosError, AxiosResponse } from "axios";
-import { Chat, Room } from "../types";
+import { IChat, IProfile, IRoom } from "../types";
 import { fetchChatMessageList, sendChatMessage } from "../apis/chat";
 import SentMessage from "../components/ChatRoomDetail/SentMessage";
 import ReceivedMessage from "../components/ChatRoomDetail/ReceivedMessage";
+import { API_HOST } from "../config";
+import dayjs from "dayjs";
+import { fetchMyProfile } from "../apis/user";
 
 const globalStyles = css`
   body {
@@ -33,19 +37,26 @@ const Container = styled.div`
 `;
 
 const RoomDetailPage: React.FC = () => {
+  const scrollBottomRef = useRef<HTMLLIElement>(null);
   const { roomId } = useParams<string>();
 
+  const { data: profileData } = useQuery<AxiosResponse<IProfile>, AxiosError>(
+    "fetchMyProfile",
+    fetchMyProfile
+  );
   const { data: chatRoomDetailData } = useQuery<
-    AxiosResponse<Room>,
+    AxiosResponse<IRoom>,
     AxiosError
   >(["fetchChatRoomDetail", roomId], () =>
     fetchChatRoomDetail(roomId as string)
   );
 
+  const [messages, setMessages] = useState<Array<IChat>>([]);
+
   const { data: chatListData } = useQuery<
-    AxiosResponse<Array<Chat>>,
+    AxiosResponse<Array<IChat>>,
     AxiosError
-  >(["fetchChatMessageList", roomId], () =>
+  >(["fetchChatMessageList", roomId, messages], () =>
     fetchChatMessageList(roomId as string)
   );
 
@@ -54,8 +65,24 @@ const RoomDetailPage: React.FC = () => {
   );
 
   const handleSend = (content: string) => {
-    mutation.mutate(content);
+    if (content.length) {
+      mutation.mutate(content);
+    }
   };
+
+  useEffect(() => {
+    const socket = io(`${API_HOST}/chat`, { path: "/socket.io" });
+
+    socket.emit("join", roomId);
+
+    socket.on("chat", (newMessage: IChat) => {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    });
+  }, []);
+
+  useEffect(() => {
+    scrollBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <Base>
@@ -65,24 +92,26 @@ const RoomDetailPage: React.FC = () => {
       )}
       <Container>
         <MessageList>
-          {chatListData &&
-            chatListData.data.map((chat) =>
-              chat.senderId === chatRoomDetailData?.data.userId ? (
-                <SentMessage
-                  senderId={chat.senderId}
-                  content={chat.content}
-                  timestamp={chat.createdAt}
-                />
-              ) : (
-                <ReceivedMessage
-                  receiver={chat.user.username}
-                  receiverThumbnailImage={chat.user.thumbnailImageUrl}
-                  senderId={chat.senderId}
-                  content={chat.content}
-                  timestamp={chat.createdAt}
-                />
-              )
-            )}
+          {chatListData?.data.map((message) =>
+            message.senderId === profileData?.data.userId ? (
+              <SentMessage
+                key={message.id}
+                senderId={message.senderId}
+                content={message.content}
+                timestamp={dayjs(message.createdAt).format("HH:mm")}
+              />
+            ) : (
+              <ReceivedMessage
+                key={message.id}
+                receiver={message.user?.username}
+                receiverThumbnailImage={message.user?.thumbnailImageUrl}
+                senderId={message.senderId}
+                content={message.content}
+                timestamp={dayjs(message.createdAt).format("HH:mm")}
+              />
+            )
+          )}
+          <li ref={scrollBottomRef} />
         </MessageList>
       </Container>
       <InputChat onClick={handleSend} />

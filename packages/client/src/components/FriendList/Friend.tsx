@@ -45,7 +45,7 @@ const Friend: React.FC<Props> = ({ username, thumbnailImage, onClick }) => {
   return (
     <Base color={theme.colors.gray[100]} onClick={onClick}>
       <AvatarWrapper>
-        <Avatar src={thumbnailImage} />
+        <Avatar src={thumbnailImage || "/placeholder.png"} />
       </AvatarWrapper>
       <UsernameWrapper>
         <Username>{username}</Username>

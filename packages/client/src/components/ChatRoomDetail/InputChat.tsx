@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
@@ -74,11 +74,22 @@ interface Props {
 }
 
 const InputChat: React.FC<Props> = ({ onClick }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
   const [content, setContent] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
+  };
+
+  const handleClick = () => {
+    onClick(content);
+
+    setContent("");
+
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
   };
 
   return (
@@ -93,6 +104,7 @@ const InputChat: React.FC<Props> = ({ onClick }) => {
       </PlusButtonWrapper>
       <InputWrapper>
         <Input
+          ref={inputRef}
           borderColor={theme.colors.gray[200]}
           backgroundColor={theme.colors.gray[100]}
           onChange={handleChange}
@@ -101,7 +113,7 @@ const InputChat: React.FC<Props> = ({ onClick }) => {
       <SendButtonWrapper>
         <SendButton
           backgroundColor={theme.colors.primary}
-          onClick={() => onClick(content)}
+          onClick={handleClick}
         >
           <AiOutlineArrowUp />
         </SendButton>

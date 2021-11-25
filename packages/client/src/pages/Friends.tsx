@@ -7,9 +7,9 @@ import BottomNavigation from "../components/BottomNavigation";
 import TopNavigation from "../components/TopNavigation";
 import FriendList from "../components/FriendList";
 import { useMutation, useQuery } from "react-query";
-import { fetchUserList } from "../apis/user";
+import { fetchMyProfile, fetchUserList } from "../apis/user";
 import { AxiosError, AxiosResponse } from "axios";
-import { Room, User } from "../types";
+import { IProfile, IRoom, IUser } from "../types";
 import Profile from "../components/Profile";
 import {
   fetchChatRoomList,
@@ -38,13 +38,18 @@ const Summary = styled.small`
 const FriendsPage: React.FC = () => {
   const navigate = useNavigate();
 
+  const { data: profileData } = useQuery<AxiosResponse<IProfile>, AxiosError>(
+    "fetchMyProfile",
+    fetchMyProfile
+  );
+
   const { data: userData } = useQuery<
-    AxiosResponse<{ count: number; rows: Array<User> }>,
+    AxiosResponse<{ count: number; rows: Array<IUser> }>,
     AxiosError
   >("fetchUserList", fetchUserList);
 
   const { data: chatRoomListData } = useQuery<
-    AxiosResponse<Array<Room>>,
+    AxiosResponse<Array<IRoom>>,
     AxiosError
   >("fetchChatRoomList", fetchChatRoomList);
 
@@ -60,13 +65,16 @@ const FriendsPage: React.FC = () => {
     if (chatRoom) {
       navigate(`/rooms/${chatRoom.id}`);
     } else {
-      mutation.mutate({
-        opponentId,
-      });
-
-      if (mutation.data?.data) {
-        navigate(`/rooms/${mutation.data.data.id}`);
-      }
+      mutation.mutate(
+        {
+          opponentId,
+        },
+        {
+          onSuccess: (data) => {
+            navigate(`/rooms/${data.data.id}`);
+          },
+        }
+      );
     }
   };
 
@@ -74,7 +82,7 @@ const FriendsPage: React.FC = () => {
     <Base>
       <Container>
         <TopNavigation title="친구" />
-        <Profile username="test" />
+        {profileData && <Profile username={profileData.data.username} />}
         {userData && (
           <>
             <Summary>친구 {userData.data.count}</Summary>

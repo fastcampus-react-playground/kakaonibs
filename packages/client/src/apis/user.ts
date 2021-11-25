@@ -8,6 +8,10 @@ export function fetchUserList() {
   return axiosInstance.get("/user");
 }
 
+export function fetchMyProfile() {
+  return axiosInstance.get("/user/me");
+}
+
 export function login(body: User) {
   return axiosInstance.post("/user/login", body);
 }

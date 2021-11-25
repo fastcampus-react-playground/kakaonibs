@@ -80,7 +80,7 @@ const ChatRoom: React.FC<Props> = ({
     <StyledLink to={`/rooms/${id}`} color={theme.colors.gray[900]}>
       <Base color={theme.colors.gray[100]}>
         <AvatarWrapper>
-          <Avatar src="/placeholder.jpeg" />
+          <Avatar src="/placeholder.png" />
         </AvatarWrapper>
         <Content>
           <Username>{username}</Username>

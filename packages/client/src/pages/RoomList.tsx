@@ -7,7 +7,7 @@ import BottomNavigation from "../components/BottomNavigation";
 import TopNavigation from "../components/TopNavigation";
 import { useQuery } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
-import { Room } from "../types";
+import { IRoom } from "../types";
 import { fetchChatRoomList } from "../apis/room";
 
 const Base = styled.div`
@@ -24,7 +24,7 @@ const Container = styled.div`
 
 const RoomListPage: React.FC = () => {
   const { data: chatRoomListData } = useQuery<
-    AxiosResponse<Array<Room>>,
+    AxiosResponse<Array<IRoom>>,
     AxiosError
   >("fetchChatRoomList", fetchChatRoomList);
 

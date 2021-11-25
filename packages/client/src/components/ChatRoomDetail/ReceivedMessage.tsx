@@ -57,7 +57,10 @@ const ReceivedMessage: React.FC<ReceivedMessage> = ({
 
   return (
     <Base>
-      <Image src={receiverThumbnailImage} alt={`${receiver}의 썸네일`} />
+      <Image
+        src={receiverThumbnailImage || "/placeholder.png"}
+        alt={`${receiver}의 썸네일`}
+      />
       <Content>
         <UserName>{receiver}</UserName>
         <Info>

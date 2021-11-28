@@ -8,7 +8,7 @@ import TopNavigation from "../components/TopNavigation";
 import { useQuery } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
 import { IRoom } from "../types";
-import { fetchChatRoomList } from "../apis/room";
+import { fetchChatRoomList } from "../apis/roomApi";
 
 const Base = styled.div`
   width: 100%;

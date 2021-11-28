@@ -8,15 +8,15 @@ import TopNavigation from "../components/ChatRoomDetail/TopNavigation";
 import InputChat from "../components/ChatRoomDetail/InputChat";
 import MessageList from "../components/ChatRoomDetail/MessageList";
 import { useMutation, useQuery } from "react-query";
-import { fetchChatRoomDetail } from "../apis/room";
+import { fetchChatRoomDetail } from "../apis/roomApi";
 import { AxiosError, AxiosResponse } from "axios";
 import { IChat, IProfile, IRoom } from "../types";
-import { fetchChatMessageList, sendChatMessage } from "../apis/chat";
+import { fetchChatMessageList, sendChatMessage } from "../apis/chatApi";
 import SentMessage from "../components/ChatRoomDetail/SentMessage";
 import ReceivedMessage from "../components/ChatRoomDetail/ReceivedMessage";
 import { API_HOST } from "../config";
 import dayjs from "dayjs";
-import { fetchMyProfile } from "../apis/user";
+import { fetchMyProfile } from "../apis/userApi";
 
 const globalStyles = css`
   body {

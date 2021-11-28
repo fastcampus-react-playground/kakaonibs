@@ -23,7 +23,6 @@ router.get("/:roomId", async (req, res) => {
 /* 채팅 전송 */
 router.post("/:roomId", async (req, res) => {
   try {
-    // @ts-ignore
     const chat = await Chat.create({
       // @ts-ignore
       senderId: req.session.userId,

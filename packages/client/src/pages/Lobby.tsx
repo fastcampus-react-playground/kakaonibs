@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 import { useMutation } from "react-query";
-import { login } from "../apis/user";
+import { login } from "../apis/userApi";
 import { useNavigate } from "react-router-dom";
 
 const Base = styled.div<{ backgroundColor: string }>`

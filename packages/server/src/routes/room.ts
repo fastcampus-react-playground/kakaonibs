@@ -10,7 +10,6 @@ router.get("/", async (req, res) => {
   try {
     const rooms = await Room.findAll({
       include: User,
-      // order: ["last_message_timestamp", "DESC"],
     });
 
     res.json(rooms);
@@ -25,7 +24,6 @@ router.get("/:roomId", async (req, res) => {
       include: User,
     });
 
-    // res.json({ ...room, ...{ userId: req.session.user.id } });
     res.json(room);
   } catch (e) {}
 });

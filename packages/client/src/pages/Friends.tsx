@@ -7,7 +7,7 @@ import BottomNavigation from "../components/BottomNavigation";
 import TopNavigation from "../components/TopNavigation";
 import FriendList from "../components/FriendList";
 import { useMutation, useQuery } from "react-query";
-import { fetchMyProfile, fetchUserList } from "../apis/user";
+import { fetchMyProfile, fetchUserList } from "../apis/userApi";
 import { AxiosError, AxiosResponse } from "axios";
 import { IProfile, IRoom, IUser } from "../types";
 import Profile from "../components/Profile";
@@ -15,7 +15,7 @@ import {
   fetchChatRoomList,
   makeChatRoom,
   MakeChatRoomRequest,
-} from "../apis/room";
+} from "../apis/roomApi";
 
 const Base = styled.div`
   width: 100%;

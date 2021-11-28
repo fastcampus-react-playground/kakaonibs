@@ -4,7 +4,7 @@ import { Application, NextFunction, RequestHandler } from "express";
 import { Server } from "net";
 import { Socket } from "socket.io";
 
-const ws = (server: Server, app: Application, session: RequestHandler) => {
+const socket = (server: Server, app: Application, session: RequestHandler) => {
   const io = SocketIO(server, {
     path: "/socket.io",
     cors: {
@@ -28,7 +28,6 @@ const ws = (server: Server, app: Application, session: RequestHandler) => {
     console.log("Connected to Chat", socket.id);
 
     socket.on("join", (roomId) => {
-      console.log(roomId);
       socket.join(roomId);
     });
 
@@ -38,4 +37,4 @@ const ws = (server: Server, app: Application, session: RequestHandler) => {
   });
 };
 
-export default ws;
+export default socket;

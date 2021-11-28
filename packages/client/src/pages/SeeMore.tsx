@@ -8,7 +8,7 @@ import IconButtonList from "../components/SeeMore/IconButtonList";
 import { useQuery } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
 import { IProfile } from "../types";
-import { fetchMyProfile } from "../apis/user";
+import { fetchMyProfile } from "../apis/userApi";
 
 const Base = styled.div`
   width: 100%;

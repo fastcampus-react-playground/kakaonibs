@@ -7,7 +7,11 @@ const Base = styled.ul`
   padding: 36px 0 64px 0;
 `;
 
-const ChatRoomList: React.FC = ({ children }) => {
+interface Props {
+  children?: React.ReactNode | React.ReactNode[];
+}
+
+const ChatRoomList: React.FC<Props> = ({ children }) => {
   return <Base>{children}</Base>;
 };
 

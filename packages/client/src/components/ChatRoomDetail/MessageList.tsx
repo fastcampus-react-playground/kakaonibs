@@ -17,7 +17,11 @@ const Base = styled.ul`
   }
 `;
 
-const MessageList: React.FC = ({ children }) => {
+interface Props {
+  children?: React.ReactNode | React.ReactNode[];
+}
+
+const MessageList: React.FC<Props> = ({ children }) => {
   return <Base>{children}</Base>;
 };
 
